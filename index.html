@@ -1,2 +1,55 @@
-<h1>Home Page</h1> 
-<p>Student Portfolio</p> 
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมทายตัวเลข</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎮 เกมทายตัวเลข</h1>
+    <p>ทายเลขตั้งแต่ 1 - 100</p>
+
+    <input type="number" id="guess" placeholder="กรอกตัวเลข">
+    <button onclick="checkGuess()">ทาย</button>
+
+    <p id="result"></p>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = Number(document.getElementById("guess").value);
+            const result = document.getElementById("result");
+
+            attempts++;
+
+            if (guess === randomNumber) {
+                result.innerHTML = `🎉 ถูกต้อง! คุณใช้ ${attempts} ครั้ง`;
+            } else if (guess < randomNumber) {
+                result.innerHTML = "📈 มากกว่านี้";
+            } else {
+                result.innerHTML = "📉 น้อยกว่านี้";
+            }
+        }
+    </script>
+
+</body>
+</html>
