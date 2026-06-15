@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เกมทายตัวเลข</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เป่ายิ้งฉุบ</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+    }
+    button {
+        padding: 15px;
+        margin: 10px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    #result {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+</style>
 </head>
 <body>
 
-    <h1>🎮 เกมทายตัวเลข</h1>
-    <p>ทายเลขตั้งแต่ 1 - 100</p>
+<h1>✊✋✌ เกมเป่ายิ้งฉุบ</h1>
 
-    <input type="number" id="guess" placeholder="กรอกตัวเลข">
-    <button onclick="checkGuess()">ทาย</button>
+<button onclick="play('ค้อน')">✊ ค้อน</button>
+<button onclick="play('กระดาษ')">✋ กระดาษ</button>
+<button onclick="play('กรรไกร')">✌ กรรไกร</button>
 
-    <p id="result"></p>
+<div id="result"></div>
 
-    <script>
-        let randomNumber = Math.floor(Math.random() * 100) + 1;
-        let attempts = 0;
+<script>
+function play(player) {
+    const choices = ['ค้อน', 'กระดาษ', 'กรรไกร'];
+    const computer = choices[Math.floor(Math.random() * 3)];
 
-        function checkGuess() {
-            const guess = Number(document.getElementById("guess").value);
-            const result = document.getElementById("result");
+    let result = "";
 
-            attempts++;
+    if (player === computer) {
+        result = "🤝 เสมอ!";
+    } else if (
+        (player === 'ค้อน' && computer === 'กรรไกร') ||
+        (player === 'กระดาษ' && computer === 'ค้อน') ||
+        (player === 'กรรไกร' && computer === 'กระดาษ')
+    ) {
+        result = "🎉 คุณชนะ!";
+    } else {
+        result = "😢 คอมชนะ!";
+    }
 
-            if (guess === randomNumber) {
-                result.innerHTML = `🎉 ถูกต้อง! คุณใช้ ${attempts} ครั้ง`;
-            } else if (guess < randomNumber) {
-                result.innerHTML = "📈 มากกว่านี้";
-            } else {
-                result.innerHTML = "📉 น้อยกว่านี้";
-            }
-        }
-    </script>
+    document.getElementById("result").innerHTML =
+        `คุณ: ${player}<br>คอม: ${computer}<br><br>${result}`;
+}
+</script>
 
 </body>
 </html>
