@@ -2,59 +2,60 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เกมทายคำ</title>
+<title>เกมยิงจุดโทษ</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
         text-align: center;
+        font-family: Arial, sans-serif;
         margin-top: 50px;
     }
-    input, button {
-        padding: 10px;
+    button {
+        padding: 15px;
+        margin: 10px;
         font-size: 18px;
-        margin: 5px;
     }
-    #hint, #result {
+    #result {
         margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    #score {
         font-size: 20px;
+        margin-bottom: 20px;
     }
 </style>
 </head>
 <body>
 
-<h1>🎮 เกมทายคำ</h1>
+<h1>⚽ เกมยิงจุดโทษ</h1>
 
-<p id="hint"></p>
+<div id="score">
+    คะแนน: <span id="player">0</span>
+</div>
 
-<input type="text" id="guess" placeholder="พิมพ์คำตอบ">
-<button onclick="checkAnswer()">ตอบ</button>
+<p>เลือกทิศทางยิง</p>
 
-<p id="result"></p>
+<button onclick="shoot('ซ้าย')">⬅️ ซ้าย</button>
+<button onclick="shoot('กลาง')">⬆️ กลาง</button>
+<button onclick="shoot('ขวา')">➡️ ขวา</button>
+
+<div id="result"></div>
 
 <script>
-const words = [
-    { word: "คอมพิวเตอร์", hint: "อุปกรณ์สำหรับประมวลผลข้อมูล" },
-    { word: "โรงเรียน", hint: "สถานที่สำหรับศึกษา" },
-    { word: "ฟุตบอล", hint: "กีฬาที่ใช้เท้าเตะลูกบอล" },
-    { word: "ประเทศไทย", hint: "ประเทศที่มีกรุงเทพมหานครเป็นเมืองหลวง" },
-    { word: "GitHub", hint: "เว็บไซต์สำหรับเก็บโค้ด" }
-];
+let score = 0;
 
-let current = words[Math.floor(Math.random() * words.length)];
+function shoot(direction) {
+    const choices = ['ซ้าย', 'กลาง', 'ขวา'];
+    const goalkeeper = choices[Math.floor(Math.random() * 3)];
 
-document.getElementById("hint").innerHTML =
-    "💡 คำใบ้: " + current.hint;
-
-function checkAnswer() {
-    const guess = document.getElementById("guess").value.trim();
-
-    if (guess.toLowerCase() === current.word.toLowerCase()) {
+    if (direction === goalkeeper) {
         document.getElementById("result").innerHTML =
-            "🎉 ตอบถูก!";
+            `🧤 ผู้รักษาประตูพุ่ง ${goalkeeper}<br>❌ เซฟได้!`;
     } else {
+        score++;
         document.getElementById("result").innerHTML =
-            "❌ ตอบผิด ลองใหม่";
+            `🧤 ผู้รักษาประตูพุ่ง ${goalkeeper}<br>⚽ GOAL!!!`;
+        document.getElementById("player").innerText = score;
     }
 }
 </script>
