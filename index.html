@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เกมป๊อกเด้ง</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 40px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        margin: 10px;
+    }
+    .card {
+        display: inline-block;
+        border: 1px solid #000;
+        padding: 10px;
+        margin: 5px;
+        width: 50px;
+        font-size: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>🃏 เกมป๊อกเด้ง</h1>
+
+<button onclick="playGame()">แจกไพ่</button>
+
+<h2>ไพ่ของคุณ</h2>
+<div id="playerCards"></div>
+
+<h2>ไพ่เจ้ามือ</h2>
+<div id="dealerCards"></div>
+
+<h2 id="result"></h2>
+
+<script>
+function drawCard() {
+    return Math.floor(Math.random() * 13) + 1;
+}
+
+function calculate(cards) {
+    let total = 0;
+
+    cards.forEach(card => {
+        if (card > 10) {
+            total += 0;
+        } else {
+            total += card;
+        }
+    });
+
+    return total % 10;
+}
+
+function playGame() {
+    let player = [drawCard(), drawCard()];
+    let dealer = [drawCard(), drawCard()];
+
+    let playerScore = calculate(player);
+    let dealerScore = calculate(dealer);
+
+    document.getElementById("playerCards").innerHTML =
+        player.map(c => `<div class="card">${c}</div>`).join("");
+
+    document.getElementById("dealerCards").innerHTML =
+        dealer.map(c => `<div class="card">${c}</div>`).join("");
+
+    let result = "";
+
+    if (playerScore > dealerScore) {
+        result = `🎉 คุณชนะ! (${playerScore} แต้ม)`;
+    } else if (playerScore < dealerScore) {
+        result = `😢 เจ้ามือชนะ! (${dealerScore} แต้ม)`;
+    } else {
+        result = "🤝 เสมอ";
+    }
+
+    document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
